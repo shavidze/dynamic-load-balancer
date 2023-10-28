@@ -1,0 +1,28 @@
+{
+  "name": "4.dynamic-load-balancer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.js",
+  "type": "module",
+  "scripts": {
+    "start": "echo \"Error: no test specified\" && exit 1",
+    "start:consul": "consul agent -dev",
+    "start:apps": "forever start -f --killSignal=SIGINT src/app.js api-service && forever start -f --killSignal=SIGINT src/app.js api-service && forever start -f --killSignal=SIGINT src/app.js webapp-service",
+    "start:loadBalancer": "forever start -f --killSignal=SIGINT src/load-balancer.js",
+    "stop": "forever stopall",
+    "benchmark": "autocannon -c 200 -d 20 http://localhost:8080"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "autocannon": "^7.12.0",
+    "consul": "^1.2.0",
+    "http-proxy": "^1.18.1",
+    "nanoid": "^4.0.2",
+    "portfinder": "^1.0.32"
+  },
+  "devDependencies": {
+    "forever": "^4.0.3"
+  }
+}
